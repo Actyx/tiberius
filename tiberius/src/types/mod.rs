@@ -739,12 +739,19 @@ impl<'a> ToSql for &'a str {
             _ => "NTEXT",
         }
     }
+    fn to_sql_null() -> &'static str {
+        "NVARCHAR(4000)"
+    }
 }
 
 impl<'a> ToSql for Cow<'a, str> {
     fn to_sql(&self) -> &'static str {
         self.as_ref().to_sql()
     }
+    fn to_sql_null() -> &'static str {
+        "NVARCHAR(4000)"
+    }
+
 }
 
 impl<T: ToSql> ToSql for Option<T> {
